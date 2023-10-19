@@ -10,11 +10,31 @@ import App from './App.jsx';
 import './css/index.css';
 import ErrorPage from './pages/ErrorPage.jsx';
 import IndexPage from './pages/IndexPage.jsx';
+import AllMoviesPage from './pages/AllMoviesPage.jsx'
+import axios from 'axios';
+import LoginPage from './pages/LoginPage.jsx'
+import YourRatingsPage from './pages/YourRatingsPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorPage />}>
       <Route index element={<IndexPage />} />
+      <Route
+      path='movies'
+      element={<AllMoviesPage/>}
+      loader={async () => {
+        const res = await axios.get('/api/movies')
+        return {movies: res.data}
+      }}
+      />
+      <Route
+      path='login'
+      element={<LoginPage/>}
+      />
+      <Route
+      path='me'
+      element={<YourRatingsPage/>}
+      />
     </Route>,
   ),
 );
